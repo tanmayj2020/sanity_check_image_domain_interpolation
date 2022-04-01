@@ -4,6 +4,7 @@ import scipy.ndimage as nd
 
 
 def preprocess(sketch_points, side=800):
+    sketch_points = np.array(sketch_points)
     sketch_points = sketch_points.astype(np.float)
     sketch_points[:, :2] = sketch_points[:, :2] / np.array([side, side])
     sketch_points[:, :2] = sketch_points[:, :2] * side
