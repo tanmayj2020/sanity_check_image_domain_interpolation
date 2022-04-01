@@ -71,7 +71,8 @@ class Dataset_TUBerlin(data.Dataset):
             
             label = torch.zeros(len(self.name2num))
             label[self.name2num[sketch_path.split("/")[0]]] = 1
-            
+            sketch_img = rasterize_Sketch(vector_x)
+
             # Perform mixup on only 5 images
             if item > 0 and item%5==0:
                 mixup_idx = random.randint(0 , len(self.Train_Sketch) - 1)
@@ -80,23 +81,17 @@ class Dataset_TUBerlin(data.Dataset):
                 mixup_label[self.name2num[sketch_path_mixup.split("/")[0]]] = 1
                 vector_mixup = self.Coordinate[sketch_path_mixup]
                 p1 , p2 = strategy3(vector_x , vector_mixup)
-                ans_dict = getAssignment(p1 , p2)
+                vector_x_image = rasterize_Sketch(p1)
+                mixup_image = rasterize_Sketch(p2)
                 alpha  = 0.2
                 lam = np.random.beta(alpha , alpha)
-                vector_x = interpolation(p1 , p2 ,lam , ans_dict)
+                sketch_img = lam * vector_x_image + (1-lam) * mixup_image
                 label = lam * label + (1-lam) * mixup_label
-            sketch_img = rasterize_Sketch(vector_x)
-
             sketch_img = Image.fromarray(sketch_img).convert('RGB')
-
             n_flip = random.random()
             if n_flip > 0.5:
                 sketch_img = F.hflip(sketch_img)
-
-
             sketch_img = self.train_transform(sketch_img)
-
-
             sample = {'sketch_img': sketch_img,
                        'sketch_label': label}
 
