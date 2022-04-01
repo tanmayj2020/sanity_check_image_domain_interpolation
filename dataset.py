@@ -10,7 +10,7 @@ random.seed(9001)
 import torchvision.transforms.functional as F
 from my_rasterize import rasterize_Sketch
 import numpy as np
-from utils import strategy3 , getAssignment , interpolation
+from utils import strategy3
 
 class Dataset_TUBerlin(data.Dataset):
     def __init__(self, hp, mode):
