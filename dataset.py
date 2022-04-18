@@ -143,7 +143,7 @@ def collate_self_test(batch):
         batch_mod['sketch_label'].append(i_batch['sketch_label'])
 
     batch_mod['sketch_img'] = torch.stack(batch_mod['sketch_img'], dim=0)
-    batch_mod['sketch_label'] = torch.stack(batch_mod['sketch_label'])
+    batch_mod['sketch_label'] = torch.tensor(batch_mod['sketch_label'])
 
     return batch_mod
 
