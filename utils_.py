@@ -25,17 +25,15 @@ def preprocess(sketch_points, side=800):
 
 
 
-def strategy3(p1 , p2):
+def strategy3(p1):
     p1 = preprocess(p1 , 800)
-    p2 = preprocess(p2 , 800)
+    
     p1 = mydrawPNG(p1)
-    p2 = mydrawPNG(p2)
+    
 
     random.shuffle(p1)
     point_1_list = p1[:500]
 
-    random.shuffle(p2)
-    point_2_list = p2[:500]
+   
 
-    return point_1_list , point_2_list
-
+    return point_1_list 
